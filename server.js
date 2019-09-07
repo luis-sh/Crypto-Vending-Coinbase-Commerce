@@ -3,7 +3,7 @@
 const express = require("express");
 const CoinbaseCommerce = require("./integrations/coinbase-commerce");
 
-let app = express();
+const app = express();
 
 app.get("/coinbase-endpoint", async (req, res, next) => {
   if(!req.query) { next(); }
