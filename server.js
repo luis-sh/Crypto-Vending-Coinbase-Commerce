@@ -6,7 +6,14 @@ const CoinbaseCommerce = require("./integrations/coinbase-commerce");
 const app = express();
 
 app.get("/coinbase-endpoint", async (req, res, next) => {
-  if(!req.query) { next(); }
+
+  console.log("EPIC MEME")
+  console.log(JSON.parse(JSON.stringify(req.query)));
+  console.log("321rewq")
+
+  if(!req.query) { 
+    next(); 
+  }
 
   const ev = req.query.event;
   if(ev.type === "charge:pending") {

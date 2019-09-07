@@ -17,5 +17,4 @@ const credentials = {
 };
 
 
-http.createServer(app).listen(80);
-https.createServer(credentials, app).listen(443);
+https.createServer(credentials, app).listen(8000);
