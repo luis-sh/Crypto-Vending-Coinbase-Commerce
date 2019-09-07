@@ -2,17 +2,15 @@
 
 const express = require("express");
 const CoinbaseCommerce = require("./integrations/coinbase-commerce");
+const Util = require("./util/util");
 
 const app = express();
 
 app.get("/coinbase-endpoint", async (req, res, next) => {
 
-  console.log("EPIC MEME")
-  console.log(JSON.parse(JSON.stringify(req.query)));
-  console.log("321rewq")
-
-  if(!req.query) { 
-    next(); 
+  if(Util.objectIsEmpty(req.query)) { 
+    next();
+    return;
   }
 
   const ev = req.query.event;

@@ -2,7 +2,7 @@
 
 class Util {
 
-  static objectIsEmpty(obj: object) {
+  static objectIsEmpty(obj) {
     for(let key in obj) {
       if(Object.prototype.hasOwnProperty.call(obj, key)) { return false; }
     }
@@ -11,5 +11,5 @@ class Util {
 
 }
 
-export = Util;
+module.exports = Util;
 
