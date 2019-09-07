@@ -6,7 +6,6 @@ let app = express();
 
 app.get("/coinbase-endpoint", (req, res) => {
   
-  
 });
 
 app.use(function(req, res){

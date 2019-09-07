@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/luis-sh/crypto-vending-coinbase-commerce#readme",
   "dependencies": {
-    "coinbase-commerce": "^1.1.0",
+    "coinbase-commerce-node": "^1.0.3",
     "dotenv": "^8.1.0",
     "express": "^4.17.1"
   }
