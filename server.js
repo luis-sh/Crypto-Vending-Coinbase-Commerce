@@ -12,8 +12,8 @@ const Util = require("./util/util");
 const Web3 = require('web3');
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const provider = new HDWalletProvider(
-   process.env.mnemonic, 
-   `https://rinkeby.infura.io/v3/${process.env.infuraKey}`,
+   process.env.MNEMONIC, 
+   `https://rinkeby.infura.io/v3/${process.env. INFURA_KEY}`,
    0,
    10
 );
@@ -46,11 +46,15 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
     //Logic for sending the darn thing
     const vendingMachine = await VendingMachine(
       web3, 
-      /*contract*/
+      {
+        abi: process.env.VENDING_MACHINE_ABI,
+        address: process.env.VENDING_MACHINE_ADDRESS
+      }
     ).build();
 
     /* IDEA - GET THIS FROM METADATA FROM COINBASE */
-    const contractRes = await vendingMachine.verifyCoinbasePurchase(""/*vendor*/, /*product*/"");
+    //event.data.metadata.[THING]
+    const contractRes = await vendingMachine.verifyCoinbasePurchase(ev.data.metadata.vendor, ev.data.metadata.product);
     res.status(200).send();
   } else if (ev.type === "charge:failed") {
     //To some extent, we are failing silently
