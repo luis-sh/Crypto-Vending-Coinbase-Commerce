@@ -47,7 +47,7 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
     const vendingMachine = await VendingMachine(
       web3, 
       {
-        abi: process.env.VENDING_MACHINE_ABI,
+        abi: JSON.parse(process.env.VENDING_MACHINE_ABI),
         address: process.env.VENDING_MACHINE_ADDRESS
       }
     ).build();
@@ -56,6 +56,8 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
     //event.data.metadata.[THING]
     const contractRes = await vendingMachine.verifyCoinbasePurchase(ev.data.metadata.vendor, ev.data.metadata.product);
     res.status(200).send();
+
+  
   } else if (ev.type === "charge:failed") {
     //To some extent, we are failing silently
     console.log(`Charge Failed! Data: ${JSON.stringify(req.body)}`);

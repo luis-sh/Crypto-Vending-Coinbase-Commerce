@@ -13,34 +13,52 @@ class CoinbaseCommerce {
     this.client = Client.init(API_KEY);
   }
 
-  handleEndpoint() {
+
+  async createCharge(chargeObj){
   
-  
+    let charge = new Charge(chargeObj);
+    console.log("Uploading new charge via save...");
+    const res = await charge.save();
+    console.log(`Response ID: ${res.id}`);
+    return res;
   }
 
   async runTest() {
 
-    let someCharge = new Charge({
+    let obj = {
       "name": "First Charge For Fun",
-      "description": "Mastering how to destroy all memes",
-      "logo_url": "https://scontent-sjc3-1.cdninstagram.com/vp/d749b74ff0e00818cc4e9bdcb4406e1b/5DFE2A58/t51.2885-15/e35/65997172_146976953043568_7513483871545499946_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com",
+      "description": "Selling some sort of thing",
       "metadata": {
         "customer_name": "anonymous hooligan"
       },
-      "payments": [],
       "pricing_type": "no_price",
       "addresses": {
         "bitcoin": "mymZkiXhQNd6VWWG7VGSVdDX9bKmviti3U",
         "ethereum": "0x0000000000000000000000000000000000000000"
       }
-    });
+    };
 
-    console.log("Starting to charge");
-    const res = await someCharge.save();
-    console.log("Seems we've created it?");
-    console.log(JSON.parse(JSON.stringify(res)));
+    await this.createCharge(obj);
+  
+  }
 
-    console.log(`Response ID: ${res.id}`);
+  async runSellTest() {
+
+    let obj = {
+      "name": "Millville Protein Chewy Bar",
+      "description": "NO certified synthetic colors or synthetic preservatives",
+      "pricing_type": "fixed_price",
+      "local_price": {
+        "amount": "2",
+        "currency": "USD"
+      },
+      "metadata": {
+        "vendor": "Anonymous Vendor",
+        "product": "Millville Protein Chewy Bar"
+      }
+    };
+
+    await this.createCharge(obj);
   
   }
 
