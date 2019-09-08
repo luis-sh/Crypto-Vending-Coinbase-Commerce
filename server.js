@@ -14,12 +14,15 @@ app.get("/coinbase-endpoint", async (req, res, next) => {
   }
 
   const ev = req.query.event;
-  if(ev.type === "charge:pending") {
+  if (ev.type === "charge:created") {
+    console.log(`Charge created! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+  } else if (ev.type === "charge:pending") {
     console.log(`Charge pending! Data: ${JSON.parse(JSON.stringify(req.query))}`);
-  
   } else if (ev.type === "charge:failed") {
     //To some extent, we are failing silently
     console.log(`Charge Failed! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+  } else {
+    console.log(`An event other than creation, pending, and failure has been called: ${JSON.parse(JSON.stringify(req.query))}`);
   }
 });
 
