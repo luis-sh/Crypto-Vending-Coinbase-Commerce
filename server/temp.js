@@ -24,8 +24,8 @@ const VendingMachine = require('../eth/vending-machine');
 
 const run = async () => {
   //  Uses .env and assumes it is a JSON string
-  console.log(process.env.VENDING_MACHINE_ADDRESSES)
-  console.log(process.env.COINBASE_COMMERCE_API_KEY)
+/*  const accounts = await web3.eth.getAccounts();
+  console.log(accounts)*/
   const addresses = JSON.parse(process.env.VENDING_MACHINE_ADDRESSES);
   const keys = Object.keys(addresses);
 
@@ -52,7 +52,7 @@ const run = async () => {
 
   /* IDEA - GET THIS FROM METADATA FROM COINBASE */
   //event.data.metadata.[THING]
-  const contractRes = await vendingMachine.verifyCoinbasePurchase(ev.data.metadata.vendor, ev.data.metadata.product);
+  const contractRes = await vendingMachine.verifyCoinbasePurchase("coca-cola", "classic");
   console.log(contractRes)
 
 

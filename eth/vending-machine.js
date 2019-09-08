@@ -15,7 +15,8 @@ class VendingMachine {
   }
 
   static async build(web3, contract) {
-//    let accounts = await web3.eth.getAccounts();
+    let accounts = await web3.eth.getAccounts();
+    console.log("xx" + accounts);
     let web3Contract = new web3.eth.Contract(contract.abi, contract.address);
 
     return new VendingMachine(web3, web3Contract/*, accounts*/);
@@ -26,7 +27,9 @@ class VendingMachine {
    *
    **/
   async verifyCoinbasePurchase(/*string*/ vendor, /*string*/ product, /*string - address*/ /*sender = this.accounts[0]*/) {
-    const res = await this.contract.methods.backendPurchaseProduct(vendor, product).send(/*{ from: sender }*/);
+    let acc = this.web3.eth.accounts.privateKeyToAccount("0x" + process.env.PRIVATE_KEY);
+    console.log(acc)
+    const res = await this.contract.methods.backendPurchaseProduct(vendor, product).send({ 'from': acc.address });
     return res;
   }
 
