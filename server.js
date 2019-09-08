@@ -9,7 +9,6 @@ const app = express();
 app.use(express.json());
 
 app.post("/coinbase-endpoint", async (req, res, next) => {
-  console.log("BIGCOCKC");
   if(Util.objectIsEmpty(req.body)) { 
     next();
     return;
