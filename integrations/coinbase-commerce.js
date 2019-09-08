@@ -14,6 +14,27 @@ class CoinbaseCommerce {
   }
 
 
+  /**
+   * 
+   * Charge object expected:
+   * 
+   * {
+       "name": [NAME OF CHARGE/PRODUCT - string],
+       "description": [DESCRIPTION - string],
+       "pricing_type": "fixed_price",
+       "local_price": {
+         "amount": [AMOUNT IN CURRENCY - string | number],
+         "currency": ["BTC" | "USD" | "ETH" - string]
+       },
+       "metadata": {
+         "vendor": [PARAM PRODUCT- string], //As defined within the vending machine contract
+         "product": [PARAM PRODUCT - string] 
+       }
+     }
+   *
+   * For more information: https://commerce.coinbase.com/docs/api/#create-a-charge
+   *
+   **/
   async createCharge(chargeObj){
   
     let charge = new Charge(chargeObj);
