@@ -14,21 +14,26 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
     next();
     return;
   }
+  if(Util.objectIsEmpty(req.body.event)) {
+    let err = `Malformed request received; Data: ${JSON.stringify(req.body)}`;
+    console.log(err);
 
-    console.log(req.body);
+    res.status(403).send(err);
+    return;
+  }
   const ev = req.body.event;
   if (ev.type === "charge:created") {
-    console.log(`Charge created! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+    console.log(`Charge created! Data: ${JSON.stringify(req.body)}`);
     res.status(200).send();
   } else if (ev.type === "charge:pending") {
-    console.log(`Charge pending! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+    console.log(`Charge pending! Data: ${JSON.stringify(req.body)}`);
     res.status(200).send();
   } else if (ev.type === "charge:failed") {
     //To some extent, we are failing silently
-    console.log(`Charge Failed! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+    console.log(`Charge Failed! Data: ${JSON.stringify(req.body)}`);
     res.status(200).send();
   } else {
-    console.log(`An event other than creation, pending, and failure has been called: ${JSON.parse(JSON.stringify(req.query))}`);
+    console.log(`An event other than creation, pending, and failure has been called: ${JSON.stringify(req.body)}`);
     res.status(200).send();
   }
 });
