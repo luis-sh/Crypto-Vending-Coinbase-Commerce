@@ -26,6 +26,7 @@ class VendingMachine {
    *
    **/
   async verifyCoinbasePurchase(/*string*/ vendor, /*string*/ product, /*string - address*/ sender = this.accounts[0]) {
+    console.log(`Vendor: ${vendor}   |   Product: ${product}   |   Sender: ${sender}`)
     const res = await this.contract.methods.backendPurchaseProduct(vendor, product).send({ 'from': sender });
     return res;
   }

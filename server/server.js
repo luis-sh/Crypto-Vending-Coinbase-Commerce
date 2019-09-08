@@ -61,7 +61,7 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
       res.status(500).send(err);
       return;
     }
-    
+    console.log("contractAddress: " + contractAddress) 
     //Logic for sending the darn thing
     const vendingMachine = await VendingMachine.build(
       web3, 
@@ -73,9 +73,11 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
 
     /* IDEA - GET THIS FROM METADATA FROM COINBASE */
     //event.data.metadata.[THING]
+    console.log("Sending transaction...")
     const contractRes = await vendingMachine.verifyCoinbasePurchase(ev.data.metadata.vendor, ev.data.metadata.product);
+    console.log(contractRes);
     res.status(200).send();
-
+    return;
   
   } else if (ev.type === "charge:failed") {
     //To some extent, we are failing silently

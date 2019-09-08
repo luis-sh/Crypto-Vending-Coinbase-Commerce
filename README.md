@@ -41,6 +41,48 @@ Coinbase Commerce requires SSL for the endpoint, which (to our understanding) re
 Running the server is simple, just run:
   * `npm run start`
 
+## Testing
+
+A nice test CURL query to run against the server:
+```
+curl -d '{
+  "event": {
+    "id": "24934862-d980-46cb-9402-43c81b0cdba6",
+    "resource": "event",
+    "type": "charge:pending",
+    "api_version": "2018-03-22",
+    "created_at": "2017-01-31T20:49:02Z",
+    "data": {
+      "code": "66BEOV2A",
+      "name": "Coca-Cola",
+      "description": "Purchase of a Classic can of Coca-Cola",
+      "hosted_url": "https://commerce.coinbase.com/charges/66BEOV2A",
+      "created_at": "2017-01-31T20:49:02Z",
+      "expires_at": "2017-01-31T21:49:02Z",
+      "timeline": [
+        {
+          "time": "2017-01-31T20:49:02Z",
+          "status": "NEW"
+        }
+      ],
+      "metadata": {
+        "vendor": "coca-cola",
+        "product": "classic",
+        "location": "machine1"
+      },
+      "pricing_type": "no_price",
+      "payments": [],
+      "addresses": {
+        "bitcoin": "mymZkiXhQNd6VWWG7VGSVdDX9bKmviti3U",
+        "ethereum": "0x419f91df39951fd4e8acc8f1874b01c0c78ceba6"
+      }
+    }
+  }
+}' -H "Content-Type: application/json" -X POST https://cryptovendingmachine.xyz:8000/coinbase-endpoint
+```
+
+If the server prints the transaction, then you know you should be good!
+
 ## Notes
 
 Within the `integrations` folder is a class `CoinbaseCommerce` (coinbase-commerce.js), which is intended to abstract away Coinbase Commerce in the context of the Vending Machine project. Simply copying and pasting this while stripping the test functions would be great for things such as UIs which want to create charges. All that is needed is to pass an API key to the object, and call `createCharge` while passing an object with the documented parameters, also listed below:
