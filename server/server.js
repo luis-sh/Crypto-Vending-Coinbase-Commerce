@@ -1,8 +1,8 @@
 'use strict';
 
 const express = require("express");
-const CoinbaseCommerce = require("./integrations/coinbase-commerce");
-const Util = require("./util/util");
+const CoinbaseCommerce = require("../integrations/coinbase-commerce");
+const Util = require("../util/util");
 
 /**
  *  Web3 setup stuff
@@ -18,7 +18,7 @@ const provider = new HDWalletProvider(
    10
 );
 const web3 = new Web3(provider);
-const VendingMachine = require('./eth/vending-machine');
+const VendingMachine = require('../eth/vending-machine');
 
 const app = express();
 
