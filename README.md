@@ -2,9 +2,11 @@
 ## Coinbase Commerce Server
 The Coinbase Commerce integration for the Crypto Vending Machine project for ETHBoston. This application is meant to run on a public-facing server (e.g. a VPS), which will serve as the host of an endpoint Coinbase Commerce will contact on each event relating to the charge lifecycle.
 
-The server is powered by Express, and depends on a `.env` for certain server-specific configuration.
+The server is powered by Express, and depends on a `.env` for certain server-specific configuration. As it is set up as of now, the application will run on port `8000`, exposing an endpoint at `/coinbase-endpoint`; therefore, it should ultimately look like: 
 
-## Overview
+```
+https://[DOMAIN_NAME]:8000/coinbase-endpoint
+```
 
 ## Configuration
 
@@ -56,3 +58,5 @@ Within the `integrations` folder is a class `CoinbaseCommerce` (coinbase-commerc
        }
      }
 ```
+
+It's important for the metadata to mirror the values found within the smart contract precisely, as the server will receive this metadata and use it to determine which product it should mark as paid on the `VendingMachine` contract.
