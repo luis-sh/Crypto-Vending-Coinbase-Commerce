@@ -12,8 +12,8 @@ const Util = require("../util/util");
 const Web3 = require('web3');
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const provider = new HDWalletProvider(
-   process.env.MNEMONIC, 
-   `https://ropsten.infura.io/v3/${process.env. INFURA_KEY}`,
+   process.env.PRIVATE_KEY, 
+   `https://ropsten.infura.io/v3/${process.env.INFURA_KEY}`,
    0,
    10
 );
