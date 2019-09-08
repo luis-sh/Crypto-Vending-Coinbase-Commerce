@@ -8,11 +8,13 @@ The server is powered by Express, and depends on a `.env` for certain server-spe
 https://[DOMAIN_NAME]:8000/coinbase-endpoint
 ```
 
+The server is currently hard-coded to use the Ropsten Ethereum test network (needs refactoring down the line)
+
 ## Configuration
 
 Configuration is fairly simple. The application relies on `dotenv`, so fill out the following in the root directory of the project:
 
-`.env`:
+##### .env
 
 ```
 # Server configuration
