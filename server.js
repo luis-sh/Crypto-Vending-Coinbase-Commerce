@@ -4,6 +4,22 @@ const express = require("express");
 const CoinbaseCommerce = require("./integrations/coinbase-commerce");
 const Util = require("./util/util");
 
+/**
+ *  Web3 setup stuff
+ *
+ **/
+
+const Web3 = require('web3');
+const HDWalletProvider = require('truffle-hdwallet-provider');
+const provider = new HDWalletProvider(
+   process.env.mnemonic, 
+   `https://rinkeby.infura.io/v3/${process.env.infuraKey}`,
+   0,
+   10
+);
+const web3 = new Web3(provider);
+const VendingMachine = require('./eth/vending-machine');
+
 const app = express();
 
 app.use(express.json());
@@ -26,6 +42,15 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
     res.status(200).send();
   } else if (ev.type === "charge:pending") {
     console.log(`Charge pending! Data: ${JSON.stringify(req.body)}`);
+
+    //Logic for sending the darn thing
+    const vendingMachine = await VendingMachine(
+      web3, 
+      /*contract*/
+    ).build();
+
+    /* IDEA - GET THIS FROM METADATA FROM COINBASE */
+    const contractRes = await vendingMachine.verifyCoinbasePurchase(""/*vendor*/, /*product*/"");
     res.status(200).send();
   } else if (ev.type === "charge:failed") {
     //To some extent, we are failing silently
