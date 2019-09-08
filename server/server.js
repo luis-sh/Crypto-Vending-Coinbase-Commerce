@@ -11,10 +11,9 @@ const Util = require("../util/util");
 
 const Web3 = require('web3');
 const HDWalletProvider = require('truffle-hdwallet-provider');
-console.log(process.env.PRIVATE_KEY)
 const provider = () => { 
   return new HDWalletProvider(
-    [process.env.PRIVATE_KEY], 
+    process.env.PRIVATE_KEY, 
     `https://ropsten.infura.io/v3/${process.env.INFURA_KEY}`,
     0,
     10
@@ -66,13 +65,13 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
     }
     
     //Logic for sending the darn thing
-    const vendingMachine = await VendingMachine(
+    const vendingMachine = await VendingMachine.build(
       web3, 
       {
         abi: JSON.parse(process.env.VENDING_MACHINE_ABI),
         address: contractAddress
       }
-    ).build();
+    );
 
     /* IDEA - GET THIS FROM METADATA FROM COINBASE */
     //event.data.metadata.[THING]
