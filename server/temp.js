@@ -9,15 +9,14 @@ const Util = require("../util/util");
  **/
 
 const Web3 = require('web3');
-const HDWalletProvider = require('truffle-hdwallet-provider');
-const provider = () => { 
-  return new HDWalletProvider(
-    process.env.PRIVATE_KEY, 
-    `https://ropsten.infura.io/v3/${process.env.INFURA_KEY}`,
-    0,
-    10
+                                   //truffle-privatekey-provider
+const PrivateKeyProvider = require('truffle-hdwallet-provider');
+const provider =
+  new PrivateKeyProvider (
+    process.env.PRIVATE_KEY,
+    `https://ropsten.infura.io/v3/${process.env.INFURA_KEY}`
   )
-};
+;
 const web3 = new Web3(provider);
 const VendingMachine = require('../eth/vending-machine');
 
