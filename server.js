@@ -6,27 +6,34 @@ const Util = require("./util/util");
 
 const app = express();
 
-app.get("/coinbase-endpoint", async (req, res, next) => {
+app.use(express.json());
 
-  if(Util.objectIsEmpty(req.query)) { 
+app.post("/coinbase-endpoint", async (req, res, next) => {
+  console.log("BIGCOCKC");
+  if(Util.objectIsEmpty(req.body)) { 
     next();
     return;
   }
 
-  const ev = req.query.event;
+    console.log(req.body);
+  const ev = req.body.event;
   if (ev.type === "charge:created") {
     console.log(`Charge created! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+    res.status(200).send();
   } else if (ev.type === "charge:pending") {
     console.log(`Charge pending! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+    res.status(200).send();
   } else if (ev.type === "charge:failed") {
     //To some extent, we are failing silently
     console.log(`Charge Failed! Data: ${JSON.parse(JSON.stringify(req.query))}`);
+    res.status(200).send();
   } else {
     console.log(`An event other than creation, pending, and failure has been called: ${JSON.parse(JSON.stringify(req.query))}`);
+    res.status(200).send();
   }
 });
 
-app.get("/coinbase-endpoint-test", async (req, res) => {
+app.post("/coinbase-endpoint-test", async (req, res) => {
   let coinbaseCommerce = new CoinbaseCommerce(process.env.COINBASE_COMMERCE_API_KEY);
   coinbaseCommerce.runTest();
 });

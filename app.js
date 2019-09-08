@@ -16,5 +16,5 @@ const credentials = {
   ca: ca
 };
 
-
+console.log(JSON.parse(JSON.stringify(credentials)));
 https.createServer(credentials, app).listen(8000);
