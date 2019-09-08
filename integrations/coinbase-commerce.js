@@ -28,7 +28,8 @@ class CoinbaseCommerce {
        },
        "metadata": {
          "vendor": [PARAM PRODUCT- string], //As defined within the vending machine contract
-         "product": [PARAM PRODUCT - string] 
+         "product": [PARAM PRODUCT - string],
+         "location": [string]
        }
      }
    *

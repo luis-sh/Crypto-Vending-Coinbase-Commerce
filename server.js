@@ -43,12 +43,31 @@ app.post("/coinbase-endpoint", async (req, res, next) => {
   } else if (ev.type === "charge:pending") {
     console.log(`Charge pending! Data: ${JSON.stringify(req.body)}`);
 
+
+    //Determine address based on location
+    //  Uses .env and assumes it is a JSON string
+    const addresses = JSON.parse(process.env.VENDING_MACHINE_ADDRESSES);
+    const keys = Object.keys(addresses);
+
+    let contractAddress = "";
+    for(let i = 0; i < keys.length; i++) {
+      if(keys[i] === ev.data.metadata.location) {
+        contractAddress = addresses[keys[i]];
+      }
+    }
+    if(contractAddress === "") {
+      let err = `Location passed "${ev.data.metadata.location}" not found within the server`;
+      console.log(err);
+      res.status(500).send(err);
+      return;
+    }
+    
     //Logic for sending the darn thing
     const vendingMachine = await VendingMachine(
       web3, 
       {
         abi: JSON.parse(process.env.VENDING_MACHINE_ABI),
-        address: process.env.VENDING_MACHINE_ADDRESS
+        address: contractAddress
       }
     ).build();
 
