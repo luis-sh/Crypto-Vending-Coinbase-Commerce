@@ -6,9 +6,9 @@ const https = require("https");
 
 const app = require('./server/server.js');
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/cryptovendingmachine.xyz/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/cryptovendingmachine.xyz/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/cryptovendingmachine.xyz/chain.pem', 'utf8');
+const privateKey = fs.readFileSync(process.env.SSL_PRIVATE_KEY, 'utf8');
+const certificate = fs.readFileSync(process.env.SSL_CERTIFICATE, 'utf8');
+const ca = fs.readFileSync(process.env.SSL_CA, 'utf8');
 
 const credentials = {
   key: privateKey,
