@@ -1,4 +1,4 @@
-# Crypto Vending Machine
+# Crypto Vending Machine 🍫
 ## Coinbase Commerce Server
 The Coinbase Commerce integration for the Crypto Vending Machine project for ETHBoston. This application is meant to run on a public-facing server (e.g. a VPS), which will serve as the host of an endpoint Coinbase Commerce will contact on each event relating to the charge lifecycle.
 
@@ -14,7 +14,9 @@ Configuration is fairly simple. The application relies on `dotenv`, so fill out 
 
 ```
 # Server configuration
-
+SSL_PRIVATE_KEY=[ssl-private-key-filepath]
+SSL_CERTIFICATE=[ssl-certificate-filepath]
+SSL_CA=[ssl-ca-filepath]
 
 # Web3
 MNEMONIC=[12-word-mnemonic]
@@ -29,10 +31,28 @@ VENDING_MACHINE_ADDRESSES=[json-locations-mapped-to-contract-addresses]
 COINBASE_COMMERCE_API_KEY=[api-key]
 ```
 
-Coinbase Commerce requires SSL for the endpoint, which (to our understanding) requires a domain. The current configuration was produced via Let's Encrypt's `certbot`, which generates a certificate at a particular location. The privat key, certificate, and CA must be re-configured
+Coinbase Commerce requires SSL for the endpoint, which (to our understanding) requires a domain. The current configuration was produced via Let's Encrypt's `certbot`, which generates a certificate at a particular location. The private key, certificate, and CA will need to be generated and placed within the config as shown above.
 
 ## Running
 Running the server is simple, just run:
   * `npm run start`
 
 ## Notes
+
+Within the `integrations` folder is a class `CoinbaseCommerce` (coinbase-commerce.js), which is intended to abstract away Coinbase Commerce in the context of the Vending Machine project. Simply copying and pasting this while stripping the test functions would be great for things such as UIs which want to create charges. All that is needed is to pass an API key to the object, and call `createCharge` while passing an object with the documented parameters, also listed below:
+```
+     {
+       "name": [NAME OF CHARGE/PRODUCT - string],
+       "description": [DESCRIPTION - string],
+       "pricing_type": "fixed_price",
+       "local_price": {
+         "amount": [AMOUNT IN CURRENCY - string | number],
+         "currency": ["BTC" | "USD" | "ETH" - string]
+       },
+       "metadata": {
+         "vendor": [PARAM PRODUCT - string], //As defined within the vending machine contract
+         "product": [PARAM PRODUCT - string],
+         "location": [string]
+       }
+     }
+```
